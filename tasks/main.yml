@@ -9,3 +9,5 @@
     line: Server = {{ item }}$repo/os/$arch
   with_items: archlinux_mirrors
   notify: Sync pacman
+
+- meta: flush_handlers
