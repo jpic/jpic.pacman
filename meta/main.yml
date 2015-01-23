@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: James Pic
+  description: Setup pacman configuration.
+  company: YourLabs
+  license: BSD
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: GenericLinux
+    versions:
+    - all
+    - any
+
+  categories:
+  - system

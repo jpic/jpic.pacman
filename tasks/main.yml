@@ -1,0 +1,10 @@
+---
+
+- name: use yourlabs.org arch package mirror
+  sudo: yes
+  lineinfile: 
+    dest: /etc/pacman.d/mirrorlist
+    insertbefore: BOF
+    regexp: ^Server = {{ item.replace('$', '.') }}
+    line: Server = {{ item }}$repo/os/$arch
+  with_items: archlinux_mirrors
