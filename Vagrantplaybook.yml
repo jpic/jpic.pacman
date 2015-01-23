@@ -1,6 +1,8 @@
 ---
 
 - hosts: all
+  handlers:
+  - include: 'handlers/main.yml'
   tasks:
   - include: 'tasks/main.yml'
     archlinux_mirrors:

@@ -1,4 +1,5 @@
 ---
 
-- name: sync pacman
+- name: Sync pacman
   pacman: update_cache=yes
+  sudo: yes

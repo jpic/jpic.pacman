@@ -8,4 +8,4 @@
     regexp: ^Server = {{ item.replace('$', '.') }}
     line: Server = {{ item }}$repo/os/$arch
   with_items: archlinux_mirrors
-  notify: sync pacman
+  notify: Sync pacman
