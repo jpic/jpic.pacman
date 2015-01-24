@@ -25,6 +25,11 @@ Including an example of how to use your role (for instance, with variables passe
          - role: jpic.archlinux
            archlinux_mirrors:
            - http://arch.yourlabs.org/
+           archlinux_repositories:
+           - name: repo-ck
+             url: http://repo-ck.com/$arch
+           archlinux_keys:
+           - 5EE46C4C
 
 License
 -------
