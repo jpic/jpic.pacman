@@ -6,3 +6,8 @@
   - role: .
     archlinux_mirrors:
     - http://arch.yourlabs.org/
+    archlinux_repositories:
+    - name: repo-ck
+      url: http://repo-ck.com/$arch
+    archlinux_keys:
+    - 5EE46C4C

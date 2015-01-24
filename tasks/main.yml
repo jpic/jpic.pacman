@@ -1,13 +1,40 @@
 ---
 
-- name: use yourlabs.org arch package mirror
+- name: setup pacman.conf
+  sudo: yes
+  ini_file: 
+    dest: '{{ archlinux_pacman_conf }}'
+    section: options
+    option: '{{ item.key }}'
+    value: '{{ item.value }}'
+  with_dict: archlinux_pacman_options
+  notify: Sync pacman
+
+- name: use your arch package mirrors
   sudo: yes
   lineinfile: 
-    dest: /etc/pacman.d/mirrorlist
+    dest: '{{ archlinux_pacman_mirrorlist }}'
     insertbefore: BOF
     regexp: ^Server = {{ item.replace('$', '.') }}
     line: Server = {{ item }}$repo/os/$arch
   with_items: archlinux_mirrors
+  notify: Sync pacman
+
+- name: sign keys for your repositories
+  sudo: yes
+  shell: pacman-key -r {{ item }} && pacman-key --lsign-key {{ item }}
+  with_items: archlinux_keys
+  notify: Sync pacman
+
+- name: add your repositories
+  sudo: yes
+  ini_file: 
+    dest: '{{ archlinux_pacman_conf }}'
+    section: '{{ item.name }}'
+    option: Server
+    value: '{{ item.url }}'
+    backup: yes
+  with_items: archlinux_repositories
   notify: Sync pacman
 
 - meta: flush_handlers

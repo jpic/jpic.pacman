@@ -1,2 +1,7 @@
 ---
-# defaults file for ansible-role-archlinux
+
+archlinux_pacman_options:
+  XferCommand: /usr/bin/wget --passive-ftp -c -O %o %u
+
+archlinux_pacman_conf: /etc/pacman.conf
+archlinux_pacman_mirrorlist: /etc/pacman.d/mirrorlist
