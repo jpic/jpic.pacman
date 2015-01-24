@@ -3,46 +3,46 @@
 - name: setup pacman.conf
   sudo: yes
   ini_file: 
-    dest: '{{ archlinux_pacman_conf }}'
+    dest: '{{ pacman_conf }}'
     section: options
     option: '{{ item.key }}'
     value: '{{ item.value }}'
-  with_dict: archlinux_pacman_options
+  with_dict: pacman_options
   notify: Sync pacman
 
 - name: use your arch package mirrors
   sudo: yes
   lineinfile: 
-    dest: '{{ archlinux_pacman_mirrorlist }}'
+    dest: '{{ pacman_mirrorlist }}'
     insertbefore: BOF
     regexp: ^Server = {{ item.replace('$', '.') }}
     line: Server = {{ item }}$repo/os/$arch
-  with_items: archlinux_mirrors
+  with_items: pacman_mirrors
   notify: Sync pacman
 
 - name: check if any key is missing
   sudo: yes
   action: shell pacman-key -l | grep {{ item }}
-  register: archlinux_check_keys
-  with_items: archlinux_keys
-  changed_when: archlinux_check_keys.rc != 0
+  register: pacman_check_keys
+  with_items: pacman_keys
+  changed_when: pacman_check_keys.rc != 0
   ignore_errors: yes
 
 - name: sign keys for your repositories
   sudo: yes
   action: shell pacman-key -r {{ item }} && pacman-key --lsign-key {{ item }}
-  with_items: archlinux_keys
-  when: archlinux_check_keys.changed
+  with_items: pacman_keys
+  when: pacman_check_keys.changed
 
 - name: add your repositories
   sudo: yes
   ini_file: 
-    dest: '{{ archlinux_pacman_conf }}'
+    dest: '{{ pacman_conf }}'
     section: '{{ item.name }}'
     option: Server
     value: '{{ item.url }}'
     backup: yes
-  with_items: archlinux_repositories
+  with_items: pacman_repositories
   notify: Sync pacman
 
 - meta: flush_handlers

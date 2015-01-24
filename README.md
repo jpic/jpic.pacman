@@ -11,7 +11,7 @@ Arch Linux and/or pacman.
 Role Variables
 --------------
 
-- archlinux_mirrors: a list of prefered mirrors that will be at the top of
+- pacman_mirrors: a list of prefered mirrors that will be at the top of
   mirrorlist.
 
 Example Playbook
@@ -22,13 +22,13 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - role: jpic.archlinux
-           archlinux_mirrors:
+         - role: jpic.pacman
+           pacman_mirrors:
            - http://arch.yourlabs.org/
-           archlinux_repositories:
+           pacman_repositories:
            - name: repo-ck
              url: http://repo-ck.com/$arch
-           archlinux_keys:
+           pacman_keys:
            - 5EE46C4C
 
 License

@@ -4,10 +4,10 @@
 
   roles:
   - role: .
-    archlinux_mirrors:
+    pacman_mirrors:
     - http://arch.yourlabs.org/
-    archlinux_repositories:
+    pacman_repositories:
     - name: repo-ck
       url: http://repo-ck.com/$arch
-    archlinux_keys:
+    pacman_keys:
     - 5EE46C4C
