@@ -20,11 +20,19 @@
   with_items: archlinux_mirrors
   notify: Sync pacman
 
+- name: check if any key is missing
+  sudo: yes
+  action: shell pacman-key -l | grep {{ item }}
+  register: archlinux_check_keys
+  with_items: archlinux_keys
+  changed_when: archlinux_check_keys.rc != 0
+  ignore_errors: yes
+
 - name: sign keys for your repositories
   sudo: yes
-  shell: pacman-key -r {{ item }} && pacman-key --lsign-key {{ item }}
+  action: shell pacman-key -r {{ item }} && pacman-key --lsign-key {{ item }}
   with_items: archlinux_keys
-  notify: Sync pacman
+  when: archlinux_check_keys.changed
 
 - name: add your repositories
   sudo: yes
