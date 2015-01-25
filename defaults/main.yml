@@ -5,6 +5,5 @@ pacman_options:
 
 pacman_conf: /etc/pacman.conf
 pacman_mirrorlist: /etc/pacman.d/mirrorlist
-pacman_keys: []
 pacman_mirrors: []
 pacman_repositories: []

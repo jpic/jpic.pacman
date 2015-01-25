@@ -9,5 +9,3 @@
     pacman_repositories:
     - name: repo-ck
       url: http://repo-ck.com/$arch
-    pacman_keys:
-    - 5EE46C4C

@@ -17,8 +17,10 @@ Role Variables
 Example Playbook
 ----------------
 
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This example will setup XferCommand in pacman.conf, upload and import your
+local verified and trusted pacman-keys, place http://arch.yourlabs.org/$arch at
+the top of mirrorlist, add the repo-ck repository and sync pacman if anything
+changed::
 
     - hosts: servers
       roles:
@@ -28,8 +30,8 @@ Including an example of how to use your role (for instance, with variables passe
            pacman_repositories:
            - name: repo-ck
              url: http://repo-ck.com/$arch
-           pacman_keys:
-           - 5EE46C4C
+           pacman_options:
+             XferCommand: /usr/bin/wget --passive-ftp -c -O %o %u
 
 License
 -------

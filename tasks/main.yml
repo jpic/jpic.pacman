@@ -20,19 +20,15 @@
   with_items: pacman_mirrors
   notify: Sync pacman
 
-- name: check if any key is missing
-  sudo: yes
-  action: shell pacman-key -l | grep {{ item }}
-  register: pacman_check_keys
-  with_items: pacman_keys
-  changed_when: pacman_check_keys.rc != 0
-  ignore_errors: yes
+- name: upload pacman trustdb and pubring
+  copy: src=/etc/pacman.d/gnupg/{{ item }}.gpg dest=.
+  register: pacman_key_upload
+  with_items: [pubring, trustdb]
 
-- name: sign keys for your repositories
+- name: impor thrustdb into pacman
+  shell: pacman-key --import .
   sudo: yes
-  action: shell pacman-key -r {{ item }} && pacman-key --lsign-key {{ item }}
-  with_items: pacman_keys
-  when: pacman_check_keys.changed
+  when: pacman_key_upload.changed
 
 - name: add your repositories
   sudo: yes
