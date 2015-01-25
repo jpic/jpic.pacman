@@ -7,3 +7,4 @@ pacman_conf: /etc/pacman.conf
 pacman_mirrorlist: /etc/pacman.d/mirrorlist
 pacman_mirrors: []
 pacman_repositories: []
+pacman_indempotence_path: '{{ ansible_env.HOME }}/.jpic.pacman'
