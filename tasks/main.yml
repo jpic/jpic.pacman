@@ -20,22 +20,13 @@
   with_items: pacman_mirrors
   notify: Sync pacman
 
-- file: 
-    path: '{{ pacman_indempotence_path }}'
-    state: directory 
-    mode: 0700
-
 - name: upload pacman trustdb and pubring
   copy: 
     src: /etc/pacman.d/gnupg/{{ item }}
-    dest: '{{ pacman_indempotence_path }}'
+    dest: /etc/pacman.d/gnupg/
+  sudo: yes
   register: pacman_key_upload
   with_items: [pubring.gpg, trustdb.gpg]
-
-- name: impor thrustdb into pacman
-  shell: pacman-key --import {{ pacman_indempotence_path }}
-  sudo: yes
-  when: pacman_key_upload.changed
 
 - name: add your repositories
   sudo: yes
