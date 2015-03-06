@@ -1,7 +1,6 @@
 ---
 
 pacman_options:
-  XferCommand: /usr/bin/wget --passive-ftp -c -O %o %u
   SigLevel: Required DatabaseNever
 
 pacman_conf: /etc/pacman.conf
