@@ -1,7 +1,7 @@
 ---
 
 pacman_options:
-  SigLevel: Required DatabaseNever
+  SigLevel: Required DatabaseOptional
 
 pacman_conf: /etc/pacman.conf
 pacman_mirrorlist: /etc/pacman.d/mirrorlist
