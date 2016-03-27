@@ -2,26 +2,26 @@
 
 - name: setup pacman.conf
   sudo: yes
-  ini_file: 
+  ini_file:
     dest: '{{ pacman_conf }}'
     section: options
     option: '{{ item.key }}'
     value: '{{ item.value }}'
-  with_dict: pacman_options
+  with_dict: '{{ pacman_options }}'
   notify: Sync pacman
 
 - name: use your arch package mirrors
   sudo: yes
-  lineinfile: 
+  lineinfile:
     dest: '{{ pacman_mirrorlist }}'
     insertbefore: BOF
     regexp: ^Server = {{ item.replace('$', '.') }}
     line: Server = {{ item }}$repo/os/$arch
-  with_items: pacman_mirrors
+  with_items: '{{ pacman_mirrors }}'
   notify: Sync pacman
 
 - name: upload pacman trustdb and pubring
-  copy: 
+  copy:
     src: /etc/pacman.d/gnupg/{{ item }}
     dest: /etc/pacman.d/gnupg/
   sudo: yes
@@ -30,13 +30,13 @@
 
 - name: add your repositories
   sudo: yes
-  ini_file: 
+  ini_file:
     dest: '{{ pacman_conf }}'
     section: '{{ item.name }}'
     option: Server
     value: '{{ item.url }}'
     backup: yes
-  with_items: pacman_repositories
+  with_items: '{{ pacman_repositories }}'
   notify: Sync pacman
 
 - meta: flush_handlers
